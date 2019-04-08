@@ -26,6 +26,53 @@ class GoTestStrategy ( Strategy ):
         return move . to_ball () + shoot . to_goal ( self . strength )
 
 
+class Echauffement(Strategy):
+    def __init__(self):
+        Strategy.__init__(self, "Echauffement")
+
+    def compute_strategy(self, state, id_team, id_player):
+        sup=SupState(state,id_team,id_player)
+        
+        if sup.can_shoot():
+            return SoccerAction( shoot = (sup.adv_players_pos[0] - sup.my_position)*2000)
+     
+        elif sup.autor_terrain():
+            return SoccerAction(acceleration=(sup.predict_ball()-sup.my_position))
+        else:
+            return SoccerAction(acceleration = (Vector2D(settings.GAME_WIDTH/4,settings.GAME_HEIGHT/2)if sup.sens == 1 else Vector2D(3*settings.GAME_WIDTH/4,settings.GAME_HEIGHT/2)) - sup.my_position)
+        
+        
+class Attaque(Strategy):
+    def __init__(self):
+        Strategy.__init__(self, "Attaque")
+
+    def compute_strategy(self, state, id_team, id_player):
+        sup=SupState(state,id_team,id_player)  
+        if sup.dist_fil()>10 and sup.can_shoot():
+                return SoccerAction(shoot=(sup.centre()-sup.my_position).norm_max(1.3),acceleration=(sup.predict_ball()-sup.my_position))
+    
+        elif sup.can_shoot():
+            if sup.sens==1:
+                if sup.adv_players_pos[0].y>settings.GAME_HEIGHT/2:
+                    return  SoccerAction( shoot = (Vector2D(7*settings.GAME_WIDTH/8,settings.GAME_HEIGHT/4)-sup.my_position)*1000)
+                else:
+                    return  SoccerAction( shoot = (Vector2D(7*settings.GAME_WIDTH/8,3*settings.GAME_HEIGHT/4)-sup.my_position)*1000)    
+            else:
+                 if sup.adv_players_pos[0].y>settings.GAME_HEIGHT/2:
+                    return  SoccerAction( shoot =( Vector2D(settings.GAME_WIDTH/8,settings.GAME_HEIGHT/4)-sup.my_position)*1000)
+                 else:
+                    return  SoccerAction( shoot =( Vector2D(settings.GAME_WIDTH/8,3*settings.GAME_HEIGHT/4)-sup.my_position)*1000)
+        elif sup.autor_terrain():
+            return  SoccerAction(acceleration = sup.predict_ball() - sup.my_position)
+        else:
+            return SoccerAction(acceleration = (Vector2D(settings.GAME_WIDTH/4,settings.GAME_HEIGHT/2)if sup.sens == 1 else Vector2D(3*settings.GAME_WIDTH/4,settings.GAME_HEIGHT/2)) - sup.my_position)
+
+                       
+                                                         
+        
+        
+        
+
                                                                                                                                                 
 class FonceurStrategy(Strategy):
     def __init__(self):

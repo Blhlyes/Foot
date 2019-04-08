@@ -122,15 +122,24 @@ class SupState(object):
 	def have_ball(self):
 		return self.my_position.distance(self.ball_position) < 1
 
-
+	def centre(self):
+		return Vector2D(settings.GAME_WIDTH/2,settings.GAME_HEIGHT/2)
+    
+    
 	def ball_position(self):
 		return self.state.ball.position
 
     
 	def ball_dir(self):
 		return self.state.ball.direction
-
-
+    
+	def dist_fil(self):
+		return settings.GAME_WIDTH/2 - self.my_position.x  if self.sens == 1 else self.my_position.x - settings.GAME_WIDTH/2 
+    
+	def autor_terrain(self):
+		return self.ball_position().x<=settings.GAME_WIDTH/2 and self.sens==1 or self.ball_position().x>=settings.GAME_WIDTH/2 and self.sens==-1
+    
+    
 	def can_shoot(self,position = None,ballpos = None):
 		if position is None :
 			position = self.my_position
