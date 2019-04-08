@@ -49,7 +49,8 @@ class Attaque(Strategy):
     def compute_strategy(self, state, id_team, id_player):
         sup=SupState(state,id_team,id_player)  
         if sup.dist_fil()>10 and sup.can_shoot():
-                return SoccerAction(shoot=(sup.centre()-sup.my_position).norm_max(1.3),acceleration=(sup.predict_ball()-sup.my_position))
+                
+                return SoccerAction(shoot=(sup.centre()-sup.my_position)*0.5,acceleration=(sup.predict_ball()-sup.my_position))
     
         elif sup.can_shoot():
             if sup.sens==1:

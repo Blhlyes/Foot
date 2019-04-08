@@ -1,0 +1,16 @@
+Nom:BELLACHE
+Prénom:LYES
+Num:3803054
+
+
+Q1) pour la premiére question a chaque fois je vérifie si je peux tirer,alors je tire en direction de mon joueur en utilisant adv_player_pos[0] qui me retourne la position de l'adversaire.
+Par contre si je suis loin de la balle,je vais tout d'abord voir si je suis dans moitié du terrain qui convient, si c'est le cas alors je cours vers la balle sinon je vais me positionner juste au milieu de ma moitié.
+
+
+Q2) pour la deuxiéme question je regarde si je suis loin du fillet et que je peux tirer alors je vais essayer d'avancer un peu vers les fillets (j'ai choisi 0.5 pour que le joueur ne touche pas trop la balle cad pour qu'il court pas pdt longtemps avec sinon il risque de perdre), aprés une fois que je suis proche des fillets je vais tirer a une certaine position qui sera définis par la position de l'adversaire et plus exactement son y donc dans mon cas je le compare par rapport a la moitié de la hauteur et je tire le plus loin possible
+
+Q3) je cours vers les emplacements que j'ai utilisé toute a l'heure tout en regardant mon y s'il est >height/2 ou pas, si je vois que la balle n'est pas dans ma moitié, ainsi je pourrai intercpeter la balle, sinon si elle est dans ma moitié je vais courrir vers elle et la tirer
+
+
+Q4) j'ai utilisé un attaquant qui ne prend pas de risque c'est a dire qui va tirer le plus loin possible de l'autre joueur mais sans courrir avec la balle, donc en gros il va la tirer de sa position directement sans prise de risque.
+Q5) joueur déf et attaq a la fois
